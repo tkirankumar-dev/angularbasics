@@ -1,0 +1,140 @@
+<div class="app">
+    <h3>Airline Passengers</h3>
+    <ul>
+      <li *ngFor="let passenger of passengers; let i = index;">
+          <span
+          class="status"
+          [class.checked-in]="passenger.checkedIn"></span>          
+        {{ i }}: {{ passenger.fullname }}
+        <p>{{ passenger | json }}</p>
+        <div class="date">
+          Check in Date: 
+          <!-- passenger.checkedInDate | uppercase | date: 'yMMMMd' - will give error as number cannot be transformed as upper case  -->
+          <!-- chained pipes - having more than one pipe on the same variable -->
+          {{ passenger.checkedInDate ? (passenger.checkedInDate | date: 'yMMMMd' | uppercase) : 'Not Checked In'}}
+        </div>
+        <div class="children">
+          <!-- Checks this (safe navigation property '?') if passenger.children has value and then move forward -->
+          Children: {{ passenger.children?.length || 0 }} 
+        </div>
+      </li>
+    </ul>
+    <br /><br /> 
+    <h3>Airline Passengers</h3>
+    <ul>
+      <li *ngFor="let passenger of passengers; let i = index;">
+          <span
+          class="status"
+          [ngStyle]="{ 
+            backgroundColor: (passenger.checkedIn ? '#008000' : '#FF0000') 
+          }"></span>
+        {{ i }}: {{ passenger.fullname }}
+      </li>
+    </ul>
+    <br /><br />  
+    <h3>Airline Passengers</h3>
+    <ul>
+      <li *ngFor="let passenger of passengers; let i = index;">
+          <span
+          class="status"
+          [style.backgroundColor]="(passenger.checkedIn ? '#008000' : '#FF0000')"></span>
+        {{ i }}: {{ passenger.fullname }}
+      </li>
+    </ul>
+    <br /><br />  
+    <h3>Airline Passengers</h3>
+    <ul>
+      <li *ngFor="let passenger of passengers; let i = index;">
+          <span
+          class="status"
+          [class.checked-in]="passenger.checkedIn"></span>
+          <span
+          class="status"
+          [ngClass]="{
+            'checked-in': passenger.checkedIn,
+            'checked-out': !passenger.checkedIn
+          }"></span>
+        {{ i }}: {{ passenger.fullname }}
+      </li>
+    </ul>
+    <br /><br />  
+    <h3>Airline Passengers</h3>
+    <ul>
+      <template ngFor let-passenger let-i="index" [ngForOf]="passengers">
+        <li>            
+          {{ i }}: {{ passenger.fullname }}
+        </li>
+      </template>
+    </ul>
+    
+    <div>
+      <input 
+        type="text"
+        [value] = "nameIfSyntax"
+        (input) = "handleChangeSyntax($event.target.value)"        
+      />
+      <!-- * is sugar syntax for template and [ngIf] -->
+      <template [ngIf]="nameIfSyntax.length > 2">
+          <div>
+              Searching For... {{ nameIfSyntax }}
+          </div>
+      </template>
+
+      <div *ngIf="nameIfSyntax.length > 2">
+        Searching For... {{ nameIfSyntax }}
+      </div>
+    </div>
+    <br />
+    <div>
+      <button (click)="handleRefClick(username.value)">Get Value</button>
+      <input type="text" #username />
+      <div>{{ refVariable }}</div>
+    </div>
+    <img [src]="logo" />
+    <div>
+      <button (click)="handleClick()">Change Name</button>
+    </div>
+    <!-- Examples of one way data flow and the events tied in together -->
+    <div>
+      <!-- This will look like two way data binding, however its one way data flow
+      with an event being emitted, follow particular component on an element 
+      and its telling our component that change occurred and we just update a variable value
+      of which angular change detection machanism update the listeners in the expression -->
+      <input 
+        type="text" 
+        [value]="name"  
+        (input)="handleInput($event)"
+        (blur)="handleBlur($event)"
+        />
+      <div>{{ name }}</div> 
+      <!-- this will be considered as - element.value = 'Kiran', this is only one way  -->
+    </div>
+    <h1>{{ title }}</h1>
+    <h1 [innerHTML]="title"></h1>
+    <div>
+      {{ numberOne }}, 
+      {{ numberTwo }}
+    </div> 
+    <div>
+      {{ numberOne  + numberTwo }}
+    </div>
+    <div>
+        <input 
+        type="text" 
+        [ngModel]="nameExt"
+        (ngModelChange)="handleChange($event)" />
+      <div>{{ nameExt }}</div>
+    </div>
+    <div>
+        <input 
+        type="text" 
+        [(ngModel)]="nameExt1" />
+      <div>{{ nameExt1 }}</div>
+    </div>    
+    <div>
+      {{ isHappy ? ':-)' : ':-('}}
+    </div>
+    <div>
+        {{ title + '!' }}
+    </div>
+  </div>
